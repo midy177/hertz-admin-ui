@@ -15,7 +15,7 @@ export interface BaseDataResp<T> {
   data: T;
 }
 
-export interface BaseResp{
+export interface BaseResp {
   errCode?: number;
   errMsg: string;
 }
@@ -23,7 +23,7 @@ export interface BaseResp{
 export interface BaseRespStr<T> {
   errCode?: number;
   errMsg: string;
-  protoStr : T;
+  protoStr: T;
   structStr: T;
 }
 

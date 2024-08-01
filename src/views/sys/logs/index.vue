@@ -37,10 +37,10 @@
 
   export default defineComponent({
     name: 'LogsManagement',
-    components: { BasicTable,  TableAction },
+    components: { BasicTable, TableAction },
     setup() {
       const { t } = useI18n();
-       const [registerTable, { reload }] = useTable({
+      const [registerTable, { reload }] = useTable({
         title: t('sys.logs.logsList'),
         api: getLogsList,
         columns,
@@ -94,12 +94,9 @@
       // }
 
       async function handleDelete(record: Recordable) {
-        const result = await deleteLogs({ id: record.ID }, 'modal');
+        const result = await deleteLogs({ ID: record.ID }, 'modal');
         if (result.errCode === 0) message.success(result.errMsg);
-        
       }
-
-
 
       function handleSuccess() {
         reload();

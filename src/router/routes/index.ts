@@ -79,7 +79,6 @@ export const InitRoute: AppRouteRecordRaw = {
   },
 };
 
-
 // oauth log in callback route
 export const OauthCallbackRoute: AppRouteRecordRaw = {
   path: PageEnum.OAUTH_CALLBACK,

@@ -2,11 +2,11 @@ import { defHttp } from '/@/utils/http/axios';
 import { ErrorMessageMode } from '/#/axios';
 import {
   RoleMenuResp,
-  MenuListResp,
   MenuParams,
   CreateOrUpdateMenuReq,
   MenuParamList,
   CreateOrUpdateMenuParamReq,
+  MenuListItem,
 } from './model/menuModel';
 import { BaseDataResp, BaseIdReq, BaseResp } from '/@/api/model/baseModel';
 
@@ -35,9 +35,8 @@ export const getMenuList = () => {
  */
 
 export const getAllMenu = (params?: MenuParams) => {
-  return defHttp.get<BaseDataResp<MenuListResp>>({ url: Api.GetAllMenu, params });
+  return defHttp.get<BaseDataResp<MenuListItem[]>>({ url: Api.GetAllMenu, params });
 };
-
 
 /**
  *  author: ryan

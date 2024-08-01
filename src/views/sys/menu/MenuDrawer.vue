@@ -98,7 +98,7 @@
   import { defineComponent, ref, computed, unref, reactive } from 'vue';
   import { Modal, Table, Button, Form, FormItem, Select, SelectOption } from 'ant-design-vue';
   import { BasicForm, useForm } from '/@/components/Form/index';
-  import { extraParamColumns, formSchema, paramFormData, roleOptionData } from './menu.data';
+  import { extraParamColumns, formSchema, paramFormData } from './menu.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { TableAction } from '/@/components/Table';
   import { useI18n } from 'vue-i18n';
@@ -135,7 +135,7 @@
       const modalVisible = ref<boolean>(false);
       const paramFormTitle = ref<string>('');
       // form model for menu parameters creating and updating
-      const formdata = reactive<paramFormData>({
+      const formData = reactive<paramFormData>({
         id: 0,
         menuId: 0,
         dataType: 'string',
@@ -146,49 +146,49 @@
 
       function handleOpenParamForm() {
         modalVisible.value = false;
-        formdata.id = 0;
-        formdata.key = '';
-        formdata.value = '';
-        formdata.dataType = 'string';
+        formData.id = 0;
+        formData.key = '';
+        formData.value = '';
+        formData.dataType = 'string';
         paramFormVisible.value = true;
       }
 
-      async function handleOpenModal(record: Recordable) {
+      async function handleOpenModal() {
         const values = await validate();
         let menuId: number = unref(isUpdate) ? Number(values['ID']) : 0;
-        const result = await getMenuParamListByMenuId({ id: menuId });
-        dataSource.value = result.data;
+        const result = await getMenuParamListByMenuId({ ID: menuId });
+        dataSource.value = result.data.data;
         paramFormTitle.value = t('sys.menu.addMenuParam');
-        formdata.menuId = menuId;
+        formData.menuId = menuId;
         modalVisible.value = true;
       }
 
       // menu parameters operations
       function handleEdit(record: Recordable) {
-        formdata.id = record.id;
-        formdata.key = record.key;
-        formdata.value = record.value;
-        formdata.dataType = record.dataType;
+        formData.id = record.id;
+        formData.key = record.key;
+        formData.value = record.value;
+        formData.dataType = record.dataType;
         paramFormTitle.value = t('sys.menu.editMenuParam');
         paramFormVisible.value = true;
       }
 
       async function handleDelete(record: Recordable) {
-        const result = await deleteMenuParam({ id: record.id }, 'modal');
-        if (result.code === 0) handleOpenModal();
+        const result = await deleteMenuParam({ ID: record.id }, 'modal');
+        if (result.errCode === 0) await handleOpenModal();
       }
 
       async function handleParamSubmit() {
         const result = await createOrUpdateMenuParam({
-          id: formdata.id,
-          menuId: formdata.menuId,
-          dataType: formdata.dataType,
-          value: formdata.value,
-          key: formdata.key,
+          id: formData.id,
+          menuId: formData.menuId,
+          dataType: formData.dataType,
+          value: formData.value,
+          key: formData.key,
         });
-        if (result.code === 0) {
+        if (result.errCode === 0) {
           paramFormVisible.value = false;
-          handleOpenModal();
+          await handleOpenModal();
         }
       }
 
@@ -200,12 +200,12 @@
       });
 
       const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-        resetFields();
+        await resetFields();
         setDrawerProps({ confirmLoading: false });
         isUpdate.value = !!data?.isUpdate;
 
         if (unref(isUpdate)) {
-          setFieldsValue({
+          await setFieldsValue({
             ...data.record,
           });
         }
@@ -215,8 +215,8 @@
         }
 
         // get tree data from data.data
-        let treeData = await getAllMenu().then((data) => {
-          return data.data;
+        let treeData = await getAllMenu().then((resp) => {
+          return resp.data;
         });
 
         treeData.push({
@@ -260,8 +260,7 @@
         };
 
         treeData = travel(treeData);
-        console.log(treeData)
-        updateSchema({
+        await updateSchema({
           field: 'parentID',
           //   componentProps: {
           //   options: roleOptionData(treeData, 0),
@@ -312,45 +311,21 @@
           meta: {
             title: values['meta.title'],
             icon: values['meta.icon'],
-            hideMenu: values['hideMenu'],
-            hideBreadcrumb: values['hideBreadcrumb'] == undefined ? true : values['hideBreadcrumb'],
+            hideMenu: values['meta.hideMenu'],
+            hideBreadcrumb:
+              values['meta.hideBreadcrumb'] == undefined ? true : values['meta.hideBreadcrumb'],
             currentActiveMenu:
-              values['currentActiveMenu'] == undefined ? '' : values['currentActiveMenu'],
+              values['meta.currentActiveMenu'] == undefined ? '' : values['meta.currentActiveMenu'],
             ignoreKeepAlive:
-              values['ignoreKeepAlive'] == undefined ? false : values['ignoreKeepAlive'],
-            hideTab: values['hideTab'] == undefined ? false : values['hideTab'],
-            frameSrc: values['frameSrc'] == undefined ? '' : values['frameSrc'],
-            carryParam: values['carryParam'] == undefined ? false : values['carryParam'],
-            hideChildrenInMenu: values['hideChildrenInMenu'],
-            affix: values['affix'] == undefined ? false : values['affix'],
-            dynamicLevel: values['dynamicLevel'],
-            realPath: values['realPath'] == undefined ? '' : values['realPath'],
+              values['meta.ignoreKeepAlive'] == undefined ? false : values['meta.ignoreKeepAlive'],
+            hideTab: values['meta.hideTab'] == undefined ? false : values['meta.hideTab'],
+            frameSrc: values['meta.frameSrc'] == undefined ? '' : values['meta.frameSrc'],
+            carryParam: values['meta.carryParam'] == undefined ? false : values['meta.carryParam'],
+            hideChildrenInMenu: values['meta.hideChildrenInMenu'],
+            affix: values['meta.affix'] == undefined ? false : values['meta.affix'],
+            dynamicLevel: values['meta.dynamicLevel'],
+            realPath: values['meta.realPath'] == undefined ? '' : values['meta.realPath'],
           },
-
-          // ID: menuId,
-          // type: values['type'],
-          // parentId: parentId,
-          // path: values['path'] == undefined ? '' : values['path'],
-          // name: values['name'],
-          // component: componentValue,
-          // redirect: values['redirect'] == undefined ? '' : values['redirect'],
-          // orderNo: values['orderNo'],
-          // disabled: values['disabled'],
-          // title: values['title'],
-          // icon: values['icon'],
-          // currentActiveMenu:
-          //   values['currentActiveMenu'] == undefined ? '' : values['currentActiveMenu'],
-          // hideMenu: values['hideMenu'],
-          // hideBreadcrumb: values['hideBreadcrumb'] == undefined ? true : values['hideBreadcrumb'],
-          // ignoreKeepAlive:
-          //   values['ignoreKeepAlive'] == undefined ? false : values['ignoreKeepAlive'],
-          // hideTab: values['hideTab'] == undefined ? false : values['hideTab'],
-          // frameSrc: values['frameSrc'] == undefined ? '' : values['frameSrc'],
-          // carryParam: values['carryParam'] == undefined ? false : values['carryParam'],
-          // hideChildrenInMenu: values['hideChildrenInMenu'],
-          // affix: values['affix'] == undefined ? false : values['affix'],
-          // dynamicLevel: values['dynamicLevel'],
-          // realPath: values['realPath'] == undefined ? '' : values['realPath'],
         };
         if (params.ID === 0) {
           const result = await CreateOrAddMenu(params);
@@ -384,7 +359,7 @@
         handleOpenModal,
         modalVisible,
         dataSource,
-        formdata,
+        formdata: formData,
         paramFormVisible,
         handleOpenParamForm,
         paramFormTitle,

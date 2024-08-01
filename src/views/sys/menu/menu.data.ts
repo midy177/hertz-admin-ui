@@ -5,6 +5,7 @@ import { Tag } from 'ant-design-vue';
 import { Icon } from '/@/components/Icon';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { formatToDateTime } from '/@/utils/dateUtil';
+import { ColumnGroupType, ColumnType } from 'ant-design-vue/es/table';
 
 const { t } = useI18n();
 // interface compOption {
@@ -25,7 +26,7 @@ const { t } = useI18n();
 //   return result;
 // };
 
-export const extraParamColumns = [
+export const extraParamColumns: (ColumnGroupType<any> | ColumnType<any>)[] = [
   {
     title: 'ID',
     dataIndex: 'id',
@@ -125,7 +126,7 @@ export const columns: BasicColumn[] = [
   },
 ];
 
-const isDir = (menuType: Number) => menuType === 0;
+// const isDir = (menuType: Number) => menuType === 0;
 const isMenu = (menuType: Number) => menuType === 1;
 const isButton = (menuType: Number) => menuType === 2;
 
@@ -226,7 +227,7 @@ export const formSchema: FormSchema[] = [
     rules: [{ max: 100 }],
   },
   {
-    field: 'frameSrc',
+    field: 'meta.frameSrc',
     label: t('sys.menu.frameSrc'),
     component: 'Input',
     defaultValue: '',
@@ -234,7 +235,7 @@ export const formSchema: FormSchema[] = [
     rules: [{ max: 100 }],
   },
   {
-    field: 'dynamicLevel',
+    field: 'meta.dynamicLevel',
     label: t('sys.menu.dynamicLevel'),
     defaultValue: 20,
     component: 'InputNumber',
@@ -243,7 +244,7 @@ export const formSchema: FormSchema[] = [
     ifShow: ({ values }) => !isButton(values.menuType),
   },
   {
-    field: 'realPath',
+    field: 'meta.realPath',
     label: t('sys.menu.realPath'),
     component: 'Input',
     defaultValue: '',
@@ -251,7 +252,7 @@ export const formSchema: FormSchema[] = [
     rules: [{ max: 200 }],
   },
   {
-    field: 'currentActiveMenu',
+    field: 'meta.currentActiveMenu',
     label: t('sys.menu.currentActiveMenu'),
     component: 'Input',
     defaultValue: '',
@@ -284,7 +285,7 @@ export const formSchema: FormSchema[] = [
     ifShow: ({ values }) => !isButton(values.menuType),
   },
   {
-    field: 'ignoreKeepAlive',
+    field: 'meta.ignoreKeepAlive',
     label: t('sys.menu.isKeepAlive'),
     component: 'RadioButtonGroup',
     defaultValue: true,
@@ -310,7 +311,7 @@ export const formSchema: FormSchema[] = [
     ifShow: ({ values }) => isMenu(values.menuType),
   },
   {
-    field: 'hideBreadcrumb',
+    field: 'meta.hideBreadcrumb',
     label: t('sys.menu.isBreadcrumbShown'),
     component: 'RadioButtonGroup',
     defaultValue: false,
@@ -323,7 +324,7 @@ export const formSchema: FormSchema[] = [
     ifShow: ({ values }) => isMenu(values.menuType),
   },
   {
-    field: 'hideTab',
+    field: 'meta.hideTab',
     label: t('sys.menu.hideTab'),
     component: 'RadioButtonGroup',
     defaultValue: false,
@@ -336,7 +337,7 @@ export const formSchema: FormSchema[] = [
     ifShow: ({ values }) => isMenu(values.menuType),
   },
   {
-    field: 'carryParam',
+    field: 'meta.carryParam',
     label: t('sys.menu.carryParam'),
     component: 'RadioButtonGroup',
     defaultValue: false,
@@ -349,7 +350,7 @@ export const formSchema: FormSchema[] = [
     ifShow: ({ values }) => isMenu(values.menuType),
   },
   {
-    field: 'hideChildrenInMenu',
+    field: 'meta.hideChildrenInMenu',
     label: t('sys.menu.hideChildrenInMenu'),
     component: 'RadioButtonGroup',
     defaultValue: false,
@@ -362,7 +363,7 @@ export const formSchema: FormSchema[] = [
     ifShow: ({ values }) => !isButton(values.menuType),
   },
   {
-    field: 'affix',
+    field: 'meta.affix',
     label: t('sys.menu.affix'),
     component: 'RadioButtonGroup',
     defaultValue: false,
@@ -375,7 +376,7 @@ export const formSchema: FormSchema[] = [
     ifShow: ({ values }) => isMenu(values.menuType),
   },
   {
-    field: 'hideTab',
+    field: 'meta.hideTab',
     label: t('sys.menu.hideTab'),
     component: 'RadioButtonGroup',
     defaultValue: false,

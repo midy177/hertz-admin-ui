@@ -1,5 +1,5 @@
+import type { AppRouteRecordRaw, Menu, MenuModule } from '/@/router/types';
 import { AppRouteModule } from '/@/router/types';
-import type { MenuModule, Menu, AppRouteRecordRaw } from '/@/router/types';
 import { findPath, treeMap } from '/@/utils/helper/treeHelper';
 import { cloneDeep } from 'lodash-es';
 import { isUrl } from '/@/utils/is';
@@ -42,6 +42,7 @@ export function transformMenuModule(menuModule: MenuModule): Menu {
 }
 
 // 将路由转换成菜单
+// export function transformRouteToMenu(routeModList: AppRouteModule[], routerMapping = false) {
 export function transformRouteToMenu(routeModList: AppRouteModule[], routerMapping = false) {
   // 借助 lodash 深拷贝
   const cloneRouteModList = cloneDeep(routeModList);
@@ -49,9 +50,9 @@ export function transformRouteToMenu(routeModList: AppRouteModule[], routerMappi
 
   // 对路由项进行修改
   cloneRouteModList.forEach((item) => {
-    // if (routerMapping && item.meta.hideChildrenInMenu && typeof item.redirect === 'string') {
-    //   item.path = item.redirect;
-    // }
+    if (routerMapping && item.meta.hideChildrenInMenu && typeof item.redirect === 'string') {
+      item.path = item.redirect;
+    }
 
     if (item.meta?.single) {
       const realItem = item?.children?.[0];
@@ -83,11 +84,10 @@ export function transformRouteToMenu(routeModList: AppRouteModule[], routerMappi
 /**
  * config menu with given params
  */
-const menuParamRegex = /(?::)([\s\S]+?)((?=\/)|$)/g;
+// const menuParamRegex = /(?::)([\s\S]+?)((?=\/)|$)/g;
 
 export function configureDynamicParamsMenu(menu: Menu, params: RouteParams) {
   const { path, paramPath } = toRaw(menu);
-  let realPath = paramPath ? paramPath : path;
   // const matchArr = realPath.match(menuParamRegex);
 
   // matchArr?.forEach((it) => {
@@ -100,7 +100,7 @@ export function configureDynamicParamsMenu(menu: Menu, params: RouteParams) {
   // if (!paramPath && matchArr && matchArr.length > 0) {
   //   menu.paramPath = path;
   // }
-  menu.path = realPath;
+  menu.path = paramPath ? paramPath : path;
   // children
   menu.children?.forEach((item) => configureDynamicParamsMenu(item, params));
 }

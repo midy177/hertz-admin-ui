@@ -1,7 +1,7 @@
 import { defHttp } from '/@/utils/http/axios';
 import { ErrorMessageMode } from '/#/axios';
-import {  BaseIdReq,  BasePageReq,  BaseResp,BaseDataResp } from '/@/api/model/baseModel';
-import {  LogsListResp, } from './model/logsModel';
+import { BaseIdReq, BasePageReq, BaseResp, BaseDataResp } from '/@/api/model/baseModel';
+import { LogsListResp } from './model/logsModel';
 
 enum Api {
   GetLogsList = '/api/admin/logs/list',
@@ -15,10 +15,6 @@ enum Api {
 export const getLogsList = (params: BasePageReq) => {
   return defHttp.get<BaseDataResp<LogsListResp>>({ url: Api.GetLogsList, params });
 };
-
-
-
-
 
 /**
  *  author: Ryan Su

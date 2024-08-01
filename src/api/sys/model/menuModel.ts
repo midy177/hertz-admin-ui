@@ -35,32 +35,19 @@ export type MenuParams = {
  *  @description: the items for menu list table
  */
 export interface MenuListItem {
-  id: number;
-  ID:number;
-  type: number;
+  id?: number;
+  ID: number;
+  menuType: number;
   trans: string;
-  parentId: number;
+  parentID: number;
   path: string;
   name: string;
   redirect: string;
   component: string;
   orderNo: number;
   disabled: boolean;
-  title: string;
-  icon: string;
-  hideMenu: boolean;
-  hideBreadcrumb: boolean;
-  currentActiveMenu: string;
-  ignoreKeepAlive: boolean;
-  hideTab: boolean;
-  frameSrc: string;
-  carryParam: boolean;
-  hideChildrenInMenu: boolean;
-  affix: boolean;
-  dynamicLevel: number;
-  realPath: string;
   children: MenuListItem[];
-  meta :any;
+  meta?: MenuMeta;
 }
 
 /**
@@ -74,15 +61,25 @@ export type MenuListResp = BaseListResp<MenuListItem>;
  *  @description: create menu reqest model
  */
 export interface CreateOrUpdateMenuReq {
-  id: number;
+  ID: number;
   menuType: number;
-  parentId: number;
+  parentId?: number;
+  level: number;
+  parentID: number;
   path: string;
   name: string;
   redirect: string;
   component: string;
   orderNo: number;
   disabled: boolean;
+  meta?: MenuMeta;
+}
+
+/**
+ *  author: ryan
+ *  @description: create menu meta model
+ */
+export interface MenuMeta {
   title: string;
   icon: string;
   hideMenu: boolean;

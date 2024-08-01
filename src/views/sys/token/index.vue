@@ -2,9 +2,9 @@
   <div>
     <BasicTable @register="registerTable">
       <template #tableTitle>
-        <Button type="primary" danger v-if="showDeleteButton" @click="handleBatchDelete()">{{
-          t('common.delete')
-        }}</Button>
+        <Button type="primary" danger v-if="showDeleteButton" @click="handleBatchDelete()">
+          {{ t('common.delete') }}
+        </Button>
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -28,7 +28,7 @@
 </template>
 <script lang="ts">
   import { createVNode, defineComponent, ref } from 'vue';
-  import {  message } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import { Button, Modal } from 'ant-design-vue';
   import { ExclamationCircleOutlined } from '@ant-design/icons-vue/lib/icons';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
@@ -77,13 +77,13 @@
       });
 
       async function handleDelete(record: Recordable) {
-        const result = await deleteToken({ id: record.ID }, 'modal');
-          if (result.errCode === 0){
+        const result = await deleteToken({ ID: record.ID }, 'modal');
+        if (result.errCode === 0) {
           message.success(result.errMsg, 3);
-          reload();
-         }else{
-          message.error(result.errMsg,);
-         }
+          await reload();
+        } else {
+          message.error(result.errMsg);
+        }
       }
 
       async function handleBatchDelete() {
@@ -93,7 +93,7 @@
           async onOk() {
             const result = await batchDeleteToken({ ids: selectedIds.value as number[] }, 'modal');
             if (result.errCode === 0) {
-              reload();
+              await reload();
               showDeleteButton.value = false;
             }
           },
