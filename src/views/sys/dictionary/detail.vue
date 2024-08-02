@@ -99,7 +99,7 @@
         const result = await deleteDictionary({ id: record.id }, 'modal');
         notification.success({
           message: t('common.successful'),
-          description: t(result.errMsg),
+          description: t(result.statusMsg),
           duration: 3,
         });
         reload();

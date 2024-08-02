@@ -175,7 +175,7 @@
 
       async function handleDelete(record: Recordable) {
         const result = await deleteMenuParam({ ID: record.id }, 'modal');
-        if (result.errCode === 0) await handleOpenModal();
+        if (result.statusCode === 0) await handleOpenModal();
       }
 
       async function handleParamSubmit() {
@@ -186,7 +186,7 @@
           value: formData.value,
           key: formData.key,
         });
-        if (result.errCode === 0) {
+        if (result.statusCode === 0) {
           paramFormVisible.value = false;
           await handleOpenModal();
         }
@@ -329,7 +329,7 @@
         };
         if (params.ID === 0) {
           const result = await CreateOrAddMenu(params);
-          if (result.errCode === 0) {
+          if (result.statusCode === 0) {
             closeDrawer();
             emit('success');
           } else {
@@ -338,7 +338,7 @@
           return;
         }
         const result = await createOrUpdateMenu(params);
-        if (result.errCode === 0) {
+        if (result.statusCode === 0) {
           closeDrawer();
           emit('success');
         } else {

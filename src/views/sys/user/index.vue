@@ -100,11 +100,11 @@
 
       async function handleDelete(record: Recordable) {
         const result = await deleteUser({ id: record.ID }, 'modal');
-         if (result.errCode === 0){
-          message.success(result.errMsg, 3);
+         if (result.statusCode === 0){
+          message.success(result.statusMsg, 3);
           reload();
          }else{
-          message.error(result.errMsg,);
+          message.error(result.statusMsg,);
          }
       }
 

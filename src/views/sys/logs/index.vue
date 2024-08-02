@@ -95,7 +95,7 @@
 
       async function handleDelete(record: Recordable) {
         const result = await deleteLogs({ ID: record.ID }, 'modal');
-        if (result.errCode === 0) message.success(result.errMsg);
+        if (result.statusCode === 0) message.success(result.statusMsg);
       }
 
       function handleSuccess() {

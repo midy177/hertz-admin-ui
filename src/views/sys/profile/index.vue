@@ -90,7 +90,7 @@
   async function getProfile() {
      console.log('Mounted', userStore.getUserInfo);
     const result = await getUserProfile();
-    if (result.errCode === 0) {
+    if (result.statusCode === 0) {
       formdata.nickname = result.nickname;
       formdata.email = result.email;
       formdata.mobile = result.mobile;
@@ -107,7 +107,7 @@
       email: formdata.email,
       mobile: formdata.mobile,
     });
-    if (result.errCode === 0) message.success(result.errMsg, 3);
+    if (result.statusCode === 0) message.success(result.statusMsg, 3);
   }
 
   async function handleChangePasswordSubmit() {
@@ -116,6 +116,6 @@
       oldPassword: changePasswordReq.oldPassword,
       newPassword: changePasswordReq.newPassword,
     });
-    if (result.errCode === 0) message.success(result.errMsg, 3);
+    if (result.statusCode === 0) message.success(result.statusMsg, 3);
   }
 </script>

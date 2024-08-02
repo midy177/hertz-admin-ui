@@ -29,7 +29,7 @@
       <FormItem name="captcha" class="enter-x" :rules="[{ required: true, len: 5 }]">
         <Input size="large" v-model:value="formData.captcha" :placeholder="t('sys.login.captcha')">
           <template #suffix>
-            <img :src="formData.imgPath" class="absolute right-0 h-full cursor-pointer" />
+            <img :src="formData.imgPath" class="absolute right-0 h-full cursor-pointer" @click="getCaptchaData"/>
           </template>
         </Input>
       </FormItem>
@@ -101,7 +101,6 @@
   import {
     AliwangwangFilled,
     GithubFilled,
-    WechatFilled,
     AlipayCircleFilled,
     GoogleCircleFilled,
     TwitterCircleFilled,
@@ -180,9 +179,10 @@
   // get captcha
   async function getCaptchaData() {
     const captcha = await getCaptcha('none');
-    console.log(captcha);
-    formData.captchaId = captcha.captchaID;
-    formData.imgPath = captcha.imgPath;
+    if (captcha.data) {
+      formData.captchaId = captcha.data.captchaID;
+      formData.imgPath = captcha.data.imgPath;
+    }
   }
 
   getCaptchaData();
@@ -192,13 +192,13 @@
       state: new Date().getMilliseconds() + '-' + provider,
       provider: provider,
     });
-    window.open(result.url);
+    if (result.data) window.open(result.data.url);
     //  window.location.href = result.url;
   }
 </script>
 
 <style scoped>
   .captcha .ant-input {
-    width: '10px';
+    width: 10px;
   }
 </style>

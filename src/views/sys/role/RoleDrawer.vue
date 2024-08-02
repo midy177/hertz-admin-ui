@@ -32,7 +32,7 @@
             :height="600"
             :tree-data="treeMenuData"
             checkStrictly= true
-            
+
           />
         </ATabPane>
         <ATabPane key="2" :tab="t('sys.authority.apiAuthority')">
@@ -87,8 +87,8 @@
       const { t } = useI18n();
       const activeKey = ref('1');
       let tempApiList: BaseDataResp<ApiListResp> = {
-        errCode: 0,
-        errMsg: '',
+        statusCode: 0,
+        statusMsg: '',
         data: { total: 0, data: [] },
       };
       // children drawer
@@ -245,9 +245,9 @@
             roleID: Number(roleData['ID']),
             MenuIDs: checkedMenuKeys.value,
           });
-           if (result.errCode === 0) {
+           if (result.statusCode === 0) {
             childrenDrawer.value = false;
-            message.success(result.errMsg);
+            message.success(result.statusMsg);
             closeDrawer();
           }
         } else {
@@ -261,9 +261,9 @@
             roleID: Number(roleData['ID']),
             data: apiReqData,
           });
-          if (result.errCode === 0) {
+          if (result.statusCode === 0) {
             childrenDrawer.value = false;
-            message.success(result.errMsg);
+            message.success(result.statusMsg);
             closeDrawer();
           }
         }

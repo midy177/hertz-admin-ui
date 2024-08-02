@@ -81,7 +81,7 @@
 
       async function handleDelete(record: Recordable) {
         const result = await deleteRole({ ID: record.ID }, 'modal');
-        if (result.errCode === 0) reload();
+        if (result.statusCode === 0) reload();
       }
 
       function handleSuccess() {

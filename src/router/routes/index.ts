@@ -69,6 +69,16 @@ export const LoginRoute: AppRouteRecordRaw = {
 // };
 
 // init route
+// export const Workbench: AppRouteRecordRaw = {
+//   path: PageEnum.BASE_HOME,
+//   name: 'Workbench',
+//   component: () => import('/@/views/dashboard/workbench/index.vue'),
+//   meta: {
+//     title: '控制台',
+//   },
+// };
+
+// init route
 export const InitRoute: AppRouteRecordRaw = {
   path: PageEnum.BASE_INITIAL_PAGE,
   name: 'InitializeDatabase',
@@ -105,6 +115,7 @@ export const OauthCallbackRoute: AppRouteRecordRaw = {
 // 未经许可的基本路由
 export const basicRoutes = [
   // dashboard,
+  // Workbench,
   LoginRoute,
   InitRoute,
   OauthCallbackRoute,

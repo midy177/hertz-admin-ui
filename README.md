@@ -1,7 +1,7 @@
 **中文** | [English](./README.En.md)
 
 ## 简介
-FormulaGo Admin UI 是基于vben-admin二次开发的为FormulaGo Admin专门开发的后台管理界面，基于Vue3和TypeScript开发， 提供后台管理基本功能，国际化等功能，本项目完全免费，可用于学习和商用
+Hertz Admin UI 是基于vben-admin二次开发的为FormulaGo Admin专门开发的后台管理界面，基于Vue3和TypeScript开发， 提供后台管理基本功能，国际化等功能，本项目完全免费，可用于学习和商用
 
 ## 特性
 

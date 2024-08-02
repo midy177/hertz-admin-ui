@@ -9,20 +9,20 @@ export interface BaseListResp<T> {
 }
 
 export interface BaseDataResp<T> {
-  errCode: number;
-  errMsg: string;
+  statusCode: number;
+  statusMsg: string;
   total: number;
   data: T;
 }
 
 export interface BaseResp {
-  errCode?: number;
-  errMsg: string;
+  statusCode?: number;
+  statusMsg: string;
 }
 
 export interface BaseRespStr<T> {
-  errCode?: number;
-  errMsg: string;
+  statusCode?: number;
+  statusMsg: string;
   protoStr: T;
   structStr: T;
 }

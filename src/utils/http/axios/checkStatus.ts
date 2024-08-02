@@ -31,7 +31,7 @@ export function checkStatus(
       if (msg != null && msg != '' && msg != undefined) {
         errMessage = t(msg);
       } else {
-        errMessage = t('sys.api.errMsg401');
+        errMessage = t('sys.api.statusMsg401');
       }
       if (stp === SessionTimeoutProcessingEnum.PAGE_COVERAGE) {
         userStore.setSessionTimeout(true);
@@ -40,35 +40,35 @@ export function checkStatus(
       }
       break;
     case httpStatus.FORBIDDEN:
-      errMessage = t('sys.api.errMsg403');
+      errMessage = t('sys.api.statusMsg403');
       break;
     // 404请求不存在
     case httpStatus.NOT_FOUND:
-      errMessage = t('sys.api.errMsg404');
+      errMessage = t('sys.api.statusMsg404');
       break;
     case httpStatus.METHOD_NOT_ALLOWED:
-      errMessage = t('sys.api.errMsg405');
+      errMessage = t('sys.api.statusMsg405');
       break;
     case httpStatus.REQUEST_TIMEOUT:
-      errMessage = t('sys.api.errMsg408');
+      errMessage = t('sys.api.statusMsg408');
       break;
     case httpStatus.INTERNAL_SERVER_ERROR:
-      errMessage = t('sys.api.errMsg500');
+      errMessage = t('sys.api.statusMsg500');
       break;
     case httpStatus.NOT_IMPLEMENTED:
-      errMessage = t('sys.api.errMsg501');
+      errMessage = t('sys.api.statusMsg501');
       break;
     case httpStatus.BAD_GATEWAY:
-      errMessage = t('sys.api.errMsg502');
+      errMessage = t('sys.api.statusMsg502');
       break;
     case httpStatus.SERVICE_UNAVAILABLE:
-      errMessage = t('sys.api.errMsg503');
+      errMessage = t('sys.api.statusMsg503');
       break;
     case httpStatus.GATEWAY_TIMEOUT:
-      errMessage = t('sys.api.errMsg504');
+      errMessage = t('sys.api.statusMsg504');
       break;
     case httpStatus.HTTP_VERSION_NOT_SUPPORTED:
-      errMessage = t('sys.api.errMsg505');
+      errMessage = t('sys.api.statusMsg505');
       break;
     default:
   }

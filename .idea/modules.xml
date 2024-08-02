@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/formulago-ui.iml" filepath="$PROJECT_DIR$/.idea/formulago-ui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/hertz-admin-ui.iml" filepath="$PROJECT_DIR$/.idea/hertz-admin-ui.iml" />
     </modules>
   </component>
 </project>

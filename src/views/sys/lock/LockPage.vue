@@ -38,7 +38,7 @@
             class="enter-x"
             v-model:value="password"
           />
-          <span :class="`${prefixCls}-entry__err-msg enter-x`" v-if="errMsg">
+          <span :class="`${prefixCls}-entry__err-msg enter-x`" v-if="statusMsg">
             {{ t('sys.lock.alert') }}
           </span>
           <div :class="`${prefixCls}-entry__footer enter-x`">
@@ -91,7 +91,7 @@
 
   const password = ref('');
   const loading = ref(false);
-  const errMsg = ref(false);
+  const statusMsg = ref(false);
   const showDate = ref(true);
 
   const { prefixCls } = useDesign('lock-page');
@@ -117,7 +117,7 @@
     try {
       loading.value = true;
       const res = await lockStore.unLock(pwd);
-      errMsg.value = !res;
+      statusMsg.value = !res;
     } finally {
       loading.value = false;
     }

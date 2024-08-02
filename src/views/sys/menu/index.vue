@@ -87,10 +87,10 @@
 
       async function handleDelete(record: Recordable) {
         const result = await deleteMenu({ id: record.ID }, 'modal');
-         if (result.errCode === 0){
-          message.success(result.errMsg, 3);
+         if (result.statusCode === 0){
+          message.success(result.statusMsg, 3);
          }else{
-          message.error(result.errMsg,);
+          message.error(result.statusMsg,);
          }
         // notification.success({
         //   message: t('common.successful'),

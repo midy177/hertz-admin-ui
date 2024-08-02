@@ -46,5 +46,5 @@ export type RedirectResp = BaseDataResp<RedirectInfo>;
  *  @description: redirect information
  */
 export interface RedirectInfo {
-  URL: string;
+  url: string;
 }
