@@ -58,14 +58,14 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       host: true,
       port: VITE_PORT,
       // 从.env加载代理配置
-      proxy: {
-        '/api': {
-          target: 'http://localhost:8191',
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/sys-api/, ''),
-        },
-      },
-      // proxy: createProxy(VITE_PROXY),
+      // proxy: {
+      //   '/api': {
+      //     target: 'http://localhost:8191',
+      //     changeOrigin: true,
+      //     rewrite: (path) => path.replace(/^\/sys-api/, ''),
+      //   },
+      // },
+      proxy: createProxy(VITE_PROXY),
     },
     esbuild: {
       pure: VITE_DROP_CONSOLE ? ['console.log', 'debugger'] : [],
