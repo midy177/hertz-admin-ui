@@ -1,4 +1,4 @@
-The FormulaGo Admin UI is a backend management interface specifically developed for FormulaGo Admin, based on Vue3 and TypeScript. It provides basic backend management functions, internationalization, and other features. This project is completely free and can be used for learning and commercial purposes.
+The Hertz Admin UI is a backend management interface specifically developed for Hertz Admin, based on Vue3 and TypeScript. It provides basic backend management functions, internationalization, and other features. This project is completely free and can be used for learning and commercial purposes.
 
 ### Features
 
@@ -23,12 +23,6 @@ The FormulaGo Admin UI is a backend management interface specifically developed 
 | System settings | Completed |
 | Dictionary function | Completed |
 | Third-party login management | Completed |
-
-### Preview
-
-#### Online Preview
-[Online Preview](https://base.hcteam.vip)
-Account/password: admin/formulago
 
 ### Related Reference Documents
 

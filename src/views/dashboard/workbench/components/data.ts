@@ -51,6 +51,6 @@ export const navItems: NavItem[] = [
 ];
 
 export const systemInfoData = [
-  ['sys.sys.Name', 'FormulaGo Admin'],
+  ['sys.sys.Name', 'Hertz Admin'],
   ['sys.sys.version', 'V 0.1.6'],
 ];
