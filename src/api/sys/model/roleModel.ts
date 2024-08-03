@@ -5,10 +5,9 @@ import { BaseListResp } from '../../model/baseModel';
  *  @description: role info response
  */
 export interface RoleInfo {
-  id: number;
-  ID:number;
+  ID: number;
   createdAt?: number;
-  title: string;
+  title?: string;
   name: string;
   value: string;
   defaultRouter: string;

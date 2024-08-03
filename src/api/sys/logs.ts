@@ -5,7 +5,7 @@ import { LogsListResp } from './model/logsModel';
 
 enum Api {
   GetLogsList = '/api/admin/logs/list',
-  DeleteLogs = '/api/admin/logs/deleteAll',
+  DeleteLogs = '/api/admin/logs/delete_all',
 }
 
 /**

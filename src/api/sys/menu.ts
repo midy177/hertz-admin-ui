@@ -6,7 +6,7 @@ import {
   CreateOrUpdateMenuReq,
   MenuParamList,
   CreateOrUpdateMenuParamReq,
-  MenuListItem,
+  MenuListResp,
 } from './model/menuModel';
 import { BaseDataResp, BaseIdReq, BaseResp } from '/@/api/model/baseModel';
 
@@ -35,7 +35,7 @@ export const getMenuList = () => {
  */
 
 export const getAllMenu = (params?: MenuParams) => {
-  return defHttp.get<BaseDataResp<MenuListItem[]>>({ url: Api.GetAllMenu, params });
+  return defHttp.get<BaseDataResp<MenuListResp>>({ url: Api.GetAllMenu, params });
 };
 
 /**

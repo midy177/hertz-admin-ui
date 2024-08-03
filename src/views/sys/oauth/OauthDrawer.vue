@@ -18,7 +18,7 @@
   import { useI18n } from 'vue-i18n';
 
   import { ProviderInfo } from '/@/api/sys/model/oauthModel';
-  import { createOrUpdateProvider,CreateOrAddProvider } from '/@/api/sys/oauth';
+  import { createOrUpdateProvider, CreateOrAddProvider } from '/@/api/sys/oauth';
 
   export default defineComponent({
     name: 'OauthDrawer',
@@ -73,17 +73,17 @@
           tokenUrl: values['tokenUrl'],
           infoUrl: values['infoUrl'],
           authStyle: values['authStyle'],
-          createdAt: 0, // do not need to set
+          // createdAt: 0, // do not need to set
         };
-        if(params.id == 0){
-           let result = await CreateOrAddProvider(params, 'message');
-        if (result.statusCode === 0) {
-          closeDrawer();
-          emit('success');
-        } else {
-          setDrawerProps({ confirmLoading: false });
-        }
-        return
+        if (params.id == 0) {
+          let result = await CreateOrAddProvider(params, 'message');
+          if (result.statusCode === 0) {
+            closeDrawer();
+            emit('success');
+          } else {
+            setDrawerProps({ confirmLoading: false });
+          }
+          return;
         }
         let result = await createOrUpdateProvider(params, 'message');
         if (result.statusCode === 0) {

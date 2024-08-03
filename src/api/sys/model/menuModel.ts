@@ -34,11 +34,12 @@ export type MenuParams = {
  *  author: ryan
  *  @description: the items for menu list table
  */
+
 export interface MenuListItem {
-  id?: number;
   ID: number;
-  menuType: number;
-  trans: string;
+  createdAt?: string;
+  updatedAt?: string;
+  level: number;
   parentID: number;
   path: string;
   name: string;
@@ -46,8 +47,9 @@ export interface MenuListItem {
   component: string;
   orderNo: number;
   disabled: boolean;
-  children: MenuListItem[];
-  meta?: MenuMeta;
+  menuType: number;
+  children: MenuListItem[]; // Recursive type reference
+  meta?: MenuMeta; // Optional property, assuming Meta is another interface
 }
 
 /**

@@ -14,8 +14,13 @@ enum Api {
  * @description: Get api list
  */
 
-export const getApiList = (params: BasePageReq) => {
-  return defHttp.get<BaseDataResp<ApiListResp>>({ url: Api.GetApiList, params });
+export const getApiList = (params: BasePageReq, mode: ErrorMessageMode = 'modal') => {
+  return defHttp.get<BaseDataResp<ApiListResp>>(
+    { url: Api.GetApiList, params },
+    {
+      errorMessageMode: mode,
+    },
+  );
 };
 
 /**

@@ -30,7 +30,7 @@ export interface ApiListReq {
  */
 
 export interface ApiAuthorityReq {
-  roleId: number;
+  roleID: number;
   data: ApiAuthorityInfo[];
 }
 

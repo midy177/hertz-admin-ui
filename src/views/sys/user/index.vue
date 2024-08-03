@@ -40,7 +40,7 @@
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import {  message } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { useUserStore } from '/@/store/modules/user';
 
@@ -99,17 +99,17 @@
       }
 
       async function handleDelete(record: Recordable) {
-        const result = await deleteUser({ id: record.ID }, 'modal');
-         if (result.statusCode === 0){
+        const result = await deleteUser({ ID: record.ID }, 'modal');
+        if (result.statusCode === 0) {
           message.success(result.statusMsg, 3);
           reload();
-         }else{
-          message.error(result.statusMsg,);
-         }
+        } else {
+          message.error(result.statusMsg);
+        }
       }
 
       async function handleLogout(record: Recordable) {
-        const result = await logout(record.UUID);
+        await logout(record.UUID);
         userStore.confirmLoginOut();
       }
 

@@ -82,9 +82,10 @@
       }
 
       async function handleDelete(record: Recordable) {
-        const result = await deleteDictionary({ id: record.id }, 'modal');
+        console.log(record);
+        const result = await deleteDictionary({ ID: record.id }, 'modal');
         message.success(t(result.statusMsg), 2);
-        reload();
+        await reload();
       }
 
       function handleSuccess() {

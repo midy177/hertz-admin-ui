@@ -7,9 +7,9 @@ import {
   RegisterReq,
   UserListReq,
   UserListResp,
-  UserInfo,
   UserProfile,
   ChangePasswordReq,
+  CreateOrUpdateUserReq,
 } from './model/userModel';
 
 import { ErrorMessageMode } from '/#/axios';
@@ -99,15 +99,23 @@ export function doLogout() {
  * @description: Get user menu based on api id
  */
 
-export const getUserList = (params: UserListReq) => {
-  return defHttp.get<BaseDataResp<UserListResp>>({ url: Api.GetUserList, params });
+export const getUserList = (params: UserListReq, mode: ErrorMessageMode = 'message') => {
+  return defHttp.get<BaseDataResp<UserListResp>>(
+    { url: Api.GetUserList, params },
+    {
+      errorMessageMode: mode,
+    },
+  );
 };
 
 /**
  *  author: Ryan Su
  *  @description: create a new user
  */
-export const createOrAddUser = (params: UserInfo, mode: ErrorMessageMode = 'message') => {
+export const createOrAddUser = (
+  params: CreateOrUpdateUserReq,
+  mode: ErrorMessageMode = 'message',
+) => {
   return defHttp.post<BaseResp>(
     { url: Api.CreateOrAddUser, params: params },
     {
@@ -120,7 +128,10 @@ export const createOrAddUser = (params: UserInfo, mode: ErrorMessageMode = 'mess
  *  author: Ryan Su
  *  @description: create a new user
  */
-export const createOrUpdateUser = (params: UserInfo, mode: ErrorMessageMode = 'message') => {
+export const createOrUpdateUser = (
+  params: CreateOrUpdateUserReq,
+  mode: ErrorMessageMode = 'message',
+) => {
   return defHttp.post<BaseResp>(
     { url: Api.CreateOrUpdateUser, params: params },
     {

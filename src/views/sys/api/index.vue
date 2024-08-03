@@ -31,7 +31,7 @@
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
-import {  message } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
 
   import { useDrawer } from '/@/components/Drawer';
@@ -83,18 +83,18 @@ import {  message } from 'ant-design-vue';
       }
 
       async function handleDelete(record: Recordable) {
-        const result = await deleteApi({ id: record.ID }, 'modal');
-        if (result.statusCode === 0){
+        const result = await deleteApi({ ID: record.ID }, 'modal');
+        if (result.statusCode === 0) {
           message.success(result.statusMsg, 3);
           reload();
-         }else{
-          message.error(result.statusMsg,);
-         }
-        // notification.success({
-        //   message: t('common.successful'),
-        //   description: t(result.msg),
-        //   duration: 3,
-        // });
+        } else {
+          message.error(result.statusMsg);
+        }
+        notification.success({
+          message: t('common.successful'),
+          description: t(result.statusMsg),
+          duration: 3,
+        });
         reload();
       }
 

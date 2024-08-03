@@ -66,7 +66,7 @@
   import { PageWrapper } from '/@/components/Page';
   import { ChangePasswordReq, FormData } from './data';
   import { Card, Form, FormItem, message } from 'ant-design-vue';
-   import { useUserStore } from '/@/store/modules/user';
+  import { useUserStore } from '/@/store/modules/user';
   import { reactive } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { changePassword, getUserProfile, updateProfile } from '/@/api/sys/user';
@@ -88,13 +88,13 @@
   });
 
   async function getProfile() {
-     console.log('Mounted', userStore.getUserInfo);
+    console.log('Mounted', userStore.getUserInfo);
     const result = await getUserProfile();
     if (result.statusCode === 0) {
-      formdata.nickname = result.nickname;
-      formdata.email = result.email;
-      formdata.mobile = result.mobile;
-      formdata.avatar = result.avatar;
+      formdata.nickname = result.data.nickname;
+      formdata.email = result.data.email;
+      formdata.mobile = result.data.mobile;
+      formdata.avatar = result.data.avatar;
     }
   }
 
@@ -112,7 +112,7 @@
 
   async function handleChangePasswordSubmit() {
     const result = await changePassword({
-      userID :  userStore.getUserInfo.ID,
+      userID: userStore.getUserInfo.ID,
       oldPassword: changePasswordReq.oldPassword,
       newPassword: changePasswordReq.newPassword,
     });

@@ -11,7 +11,6 @@ export interface BaseListResp<T> {
 export interface BaseDataResp<T> {
   statusCode: number;
   statusMsg: string;
-  total: number;
   data: T;
 }
 

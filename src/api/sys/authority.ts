@@ -14,7 +14,6 @@ enum Api {
   CreateOrAddMenuAuthority = '/api/admin/authority/menu/create',
   CreateOrUpdateMenuAuthority = '/api/admin/authority/menu/update',
   GetRoleMenuList = '/api/admin/authority/menu/role',
-  
   GetRoleApiList = '/api/admin/authority/api/role',
   GetApiList = '/api/admin/api/list',
 }

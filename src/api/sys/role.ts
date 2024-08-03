@@ -15,8 +15,13 @@ enum Api {
  * @description: Get user menu based on role id
  */
 
-export const getRoleList = (params: BasePageReq) => {
-  return defHttp.get<BaseDataResp<RoleListResp>>({ url: Api.GetRoleList, params });
+export const getRoleList = (params: BasePageReq, mode: ErrorMessageMode = 'message') => {
+  return defHttp.get<BaseDataResp<RoleListResp>>(
+    { url: Api.GetRoleList, params },
+    {
+      errorMessageMode: mode,
+    },
+  );
 };
 
 /**

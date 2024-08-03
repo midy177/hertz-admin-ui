@@ -2,7 +2,7 @@ import { defHttp } from '/@/utils/http/axios';
 import { ErrorMessageMode } from '/#/axios';
 import { BaseDataResp, BaseIdReq, BasePageReq, BaseResp } from '/@/api/model/baseModel';
 import {
-  DictionaryDetailInfo,
+  DictionaryDetail,
   DictionaryDetailListResp,
   DictionaryInfo,
   DictionaryListResp,
@@ -23,18 +23,20 @@ enum Api {
  * @description: Get dictionary list
  */
 
-export const getDictionaryList = (params: BasePageReq) => {
-  return defHttp.get<BaseDataResp<DictionaryListResp>>({ url: Api.GetDictionaryList, params });
+export const getDictionaryList = (params: BasePageReq, mode: ErrorMessageMode = 'modal') => {
+  return defHttp.get<BaseDataResp<DictionaryListResp>>(
+    { url: Api.GetDictionaryList, params },
+    {
+      errorMessageMode: mode,
+    },
+  );
 };
 
 /**
  *  author: ryan
  *  @description: create or update a new dictionary
  */
-export const createOrAddDictionary = (
-  params: DictionaryInfo,
-  mode: ErrorMessageMode = 'modal',
-) => {
+export const createOrAddDictionary = (params: DictionaryInfo, mode: ErrorMessageMode = 'modal') => {
   return defHttp.post<BaseResp>(
     { url: Api.CreateOrAddDictionary, params: params },
     {
@@ -80,7 +82,7 @@ export const createOrUpdateDictionary = (
  *  @description: delete a dictionary
  */
 export const deleteDictionary = (params: BaseIdReq, mode: ErrorMessageMode = 'modal') => {
-  return defHttp.post<BaseResp>(
+  return defHttp.delete<BaseResp>(
     { url: Api.DeleteDictionary, params: params },
     {
       errorMessageMode: mode,
@@ -104,7 +106,7 @@ export const getDictionaryDetailList = (params: BasePageReq) => {
  *  @description: create a new dictionary detail
  */
 export const createOrUpdateDictionaryDetail = (
-  params: DictionaryDetailInfo,
+  params: DictionaryDetail,
   mode: ErrorMessageMode = 'modal',
 ) => {
   return defHttp.post<BaseResp>(

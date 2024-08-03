@@ -216,10 +216,11 @@
 
         // get tree data from data.data
         let treeData = await getAllMenu().then((resp) => {
-          return resp.data;
+          return resp.data.data;
         });
 
         treeData.push({
+          level: 0,
           name: 'root',
           ID: 1,
           menuType: 0,
@@ -229,21 +230,22 @@
           component: '',
           orderNo: 0,
           disabled: false,
-          title: 'sys.menu.rootMenu',
-          trans: t('sys.menu.rootMenu'),
-          icon: '',
-          hideMenu: false,
-          hideBreadcrumb: false,
-          currentActiveMenu: '',
-          ignoreKeepAlive: false,
-          hideTab: false,
-          frameSrc: '',
-          carryParam: false,
-          hideChildrenInMenu: false,
-          affix: false,
-          dynamicLevel: 0,
-          realPath: '',
           children: [],
+          meta: {
+            title: 'sys.menu.rootMenu',
+            icon: '',
+            hideMenu: false,
+            hideBreadcrumb: false,
+            currentActiveMenu: '',
+            ignoreKeepAlive: false,
+            hideTab: false,
+            frameSrc: '',
+            carryParam: false,
+            hideChildrenInMenu: false,
+            affix: false,
+            dynamicLevel: 0,
+            realPath: '',
+          },
         });
 
         const travel = function (data: MenuListItem[]): MenuListItem[] {

@@ -31,8 +31,7 @@
             checkable
             :height="600"
             :tree-data="treeMenuData"
-            checkStrictly= true
-
+            :checkStrictly="true"
           />
         </ATabPane>
         <ATabPane key="2" :tab="t('sys.authority.apiAuthority')">
@@ -48,33 +47,31 @@
   </BasicDrawer>
 </template>
 <script lang="ts">
-  import { defineComponent, ref, computed, unref, watch } from 'vue';
-  import { Tabs, Tree, message } from 'ant-design-vue';
+  import { computed, defineComponent, ref, unref, watch } from 'vue';
+  import { message, Tabs, Tree } from 'ant-design-vue';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import {
-    formSchema,
-    convertMenuTreeData,
-    convertApiTreeData,
     convertApiCheckedKeysToReq,
     convertApiToCheckedKeys,
+    convertApiTreeData,
+    convertMenuTreeData,
+    formSchema,
   } from './role.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { useI18n } from 'vue-i18n';
 
   import { RoleInfo } from '/@/api/sys/model/roleModel';
   import { ApiAuthorityInfo } from '/@/api/sys/model/authorityModel';
-  import { createOrUpdateRole, createOrAddRole } from '/@/api/sys/role';
+  import { createOrAddRole, createOrUpdateRole } from '/@/api/sys/role';
   import { getAllMenu } from '/@/api/sys/menu';
   import {
-    createOrUpdateMenuAuthority,
-    getMenuAuthority,
-    getApiList,
     createOrUpdateApiAuthority,
+    createOrUpdateMenuAuthority,
     getApiAuthority,
-    CreateOrAddMenuAuthority,
+    getApiList,
+    getMenuAuthority,
   } from '/@/api/sys/authority';
   import { DataNode } from 'ant-design-vue/lib/tree';
-  import console, { Console } from 'console';
   import { BaseDataResp } from '/@/api/model/baseModel';
   import { ApiListResp } from '/@/api/sys/model/apiModel';
 
@@ -104,13 +101,13 @@
         try {
           treeMenuData.value = [];
           const data = await getAllMenu();
-          const dataConv = convertMenuTreeData(data.data);
+          const dataConv = convertMenuTreeData(data.data.data);
           for (const key in dataConv) {
             treeMenuData.value.push(dataConv[key]);
           }
           const roleId = await validate();
-          const checkedData = await getMenuAuthority({ id: Number(roleId['ID']) });
-          checkedMenuKeys.value = checkedData.MenuIDs;
+          const checkedData = await getMenuAuthority({ ID: Number(roleId['ID']) });
+          checkedMenuKeys.value = checkedData.data.MenuIDs;
         } catch (error) {
           console.log(error);
         }
@@ -130,14 +127,13 @@
             description: '',
           });
           tempApiList = apiData;
-          const dataConv = convertApiTreeData(apiData.data);
+          const dataConv = convertApiTreeData(apiData.data.data);
           for (const key in dataConv) {
             treeApiData.value.push(dataConv[key]);
           }
           const roleID = await validate();
-          const checkedData = await getApiAuthority({ id: Number(roleID['ID']) });
-          const checkKeyConv = convertApiToCheckedKeys(checkedData.data, apiData.data);
-          checkedApiKeys.value = checkKeyConv;
+          const checkedData = await getApiAuthority({ ID: Number(roleID['ID']) });
+          checkedApiKeys.value = convertApiToCheckedKeys(checkedData.data.data, apiData.data.data);
         } catch (error) {
           console.log(error);
         }
@@ -158,13 +154,13 @@
       });
 
       const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-        resetFields();
+        await resetFields();
         setDrawerProps({ confirmLoading: false });
 
         isUpdate.value = !!data?.isUpdate;
 
         if (unref(isUpdate)) {
-          setFieldsValue({
+          await setFieldsValue({
             ...data.record,
           });
         }
@@ -182,7 +178,7 @@
 
       //父子节点问题
       function onCheck(checkedKeys, info) {
-          allCheckedKeys.value = checkedKeys.checked.concat(info.halfCheckedKeys); //将父节点拼接到子节点
+        allCheckedKeys.value = checkedKeys.checked.concat(info.halfCheckedKeys); //将父节点拼接到子节点
       }
 
       // 编辑角色修改
@@ -209,7 +205,7 @@
         };
         if (params.ID == 0) {
           let result = await createOrAddRole(params);
-          if (result.code === 1) {
+          if (result.statusCode === 1) {
             childrenDrawer.value = false;
             closeDrawer();
             emit('success');
@@ -219,7 +215,7 @@
           return;
         }
         let result = await createOrUpdateRole(params);
-        if (result.code === 1) {
+        if (result.statusCode === 1) {
           childrenDrawer.value = false;
           closeDrawer();
           emit('success');
@@ -240,12 +236,12 @@
           // message.success(t(result.msg));
           // return
           // }
-          checkedMenuKeys.value = allCheckedKeys.value
+          checkedMenuKeys.value = allCheckedKeys.value;
           const result = await createOrUpdateMenuAuthority({
             roleID: Number(roleData['ID']),
             MenuIDs: checkedMenuKeys.value,
           });
-           if (result.statusCode === 0) {
+          if (result.statusCode === 0) {
             childrenDrawer.value = false;
             message.success(result.statusMsg);
             closeDrawer();
@@ -253,7 +249,7 @@
         } else {
           const apiReqData: ApiAuthorityInfo[] = convertApiCheckedKeysToReq(
             checkedApiKeys.value,
-            tempApiList.data,
+            tempApiList.data.data,
           );
 
           const roleData = await validate();

@@ -17,8 +17,11 @@
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { useI18n } from 'vue-i18n';
 
-  import { DictionaryDetailInfo } from '/@/api/sys/model/dictionaryModel';
-  import { createOrUpdateDictionaryDetail,CreateOrAddDetailDictionary } from '/@/api/sys/dictionary';
+  import { DictionaryDetail } from '/@/api/sys/model/dictionaryModel';
+  import {
+    createOrUpdateDictionaryDetail,
+    CreateOrAddDetailDictionary,
+  } from '/@/api/sys/dictionary';
   import { useRouter } from 'vue-router';
 
   export default defineComponent({
@@ -39,13 +42,13 @@
       });
 
       const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-        resetFields();
+        await resetFields();
         setDrawerProps({ confirmLoading: false });
 
         isUpdate.value = !!data?.isUpdate;
 
         if (unref(isUpdate)) {
-          setFieldsValue({
+          await setFieldsValue({
             ...data.record,
           });
           dictionaryName.value = data.record.name;
@@ -68,16 +71,25 @@
         } else {
           dictId = 0;
         }
-        let params: DictionaryDetailInfo = {
+        let params: DictionaryDetail = {
           ID: dictId,
           title: values['title'],
           key: values['key'],
           value: values['value'],
           status: values['status'],
-          parentId: Number(currentRoute.value.query.id),
+          parentID: Number(currentRoute.value.query.id),
         };
-           if (params.ID == 0) {
-          const result = await CreateOrAddDetailDictionary(params, 'message');
+        if (params.ID == 0) {
+          const result = await CreateOrAddDetailDictionary(
+            {
+              ID: dictId,
+              title: values['title'],
+              name: '',
+              status: values['status'],
+              description: '',
+            },
+            'message',
+          );
           if (result.statusCode === 0) {
             closeDrawer();
             emit('success');

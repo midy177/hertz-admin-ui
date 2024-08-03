@@ -16,7 +16,7 @@
   import { formSchema, roleOptionData } from './user.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { useI18n } from 'vue-i18n';
-  import { UserInfo } from '/@/api/sys/model/userModel';
+  import { CreateOrUpdateUserReq } from '/@/api/sys/model/userModel';
   import { createOrUpdateUser, createOrAddUser } from '/@/api/sys/user';
   import { getRoleList } from '/@/api/sys/role';
 
@@ -36,13 +36,13 @@
       });
 
       const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-        resetFields();
+        await resetFields();
         setDrawerProps({ confirmLoading: false });
 
         isUpdate.value = !!data?.isUpdate;
 
         if (unref(isUpdate)) {
-          setFieldsValue({
+          await setFieldsValue({
             ...data.record,
           });
         }
@@ -52,10 +52,10 @@
           pageSize: 1000,
         });
         // 更新抽屉的角色模式
-        updateSchema({
+        await updateSchema({
           field: 'roleID',
           componentProps: {
-            options: roleOptionData(roleData.data, 0),
+            options: roleOptionData(roleData.data.data, 0),
           },
         });
       });
@@ -66,22 +66,21 @@
 
       async function handleSubmit() {
         const values = await validate();
-        console.log(values)
         setDrawerProps({ confirmLoading: true });
         // defined user id
         let userId: number;
-        let password: string;
+        // let password: string;
         if (unref(isUpdate)) {
           userId = Number(values['ID']);
-          if (values['password'] == undefined) {
-            password = '';
-          } else {
-            password = values['password'];
-          }
+          // if (values['password'] == undefined) {
+          //   password = '';
+          // } else {
+          //   password = values['password'];
+          // }
         } else {
           userId = 0;
         }
-        let params: UserInfo = {
+        let params: CreateOrUpdateUserReq = {
           ID: userId,
           username: values['username'],
           nickname: values['nickname'],
@@ -90,9 +89,7 @@
           status: values['status'],
           roleID: values['roleID'],
           avatar: values['avatar'],
-          password: password,
-          createdAt: 0, // do not need to set
-          updatedAt: 0, // do not need to set
+          password: values['password'] ?? '',
         };
 
         if (params.ID == 0) {
