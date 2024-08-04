@@ -95,7 +95,7 @@
 </template>
 <script lang="ts" setup>
   import { reactive, ref, unref, computed } from 'vue';
-  // import { Icon } from 'ant-design-vue';
+  import { Modal } from 'ant-design-vue';
 
   import { Checkbox, Form, Input, Row, Col, Button, Divider } from 'ant-design-vue';
   import {
@@ -183,6 +183,10 @@
       formData.captchaId = captcha.data.captchaID;
       formData.imgPath = captcha.data.imgPath;
     }
+    Modal.info({
+      title: t('sys.api.errorTip'),
+      content: 'errMessage',
+    });
   }
 
   getCaptchaData();

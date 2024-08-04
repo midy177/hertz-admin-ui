@@ -30,9 +30,9 @@ export interface RoleInfo {
  * @description: Login interface return value
  */
 export interface LoginResp {
-  userId: string | number;
+  code: number;
   token: string;
-  role: RoleInfo;
+  expire: string;
 }
 
 /**

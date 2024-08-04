@@ -90,11 +90,11 @@ export const useUserStore = defineStore({
     ): Promise<GetUserInfoModel | null> {
       try {
         const { goHome = true, mode, ...loginParams } = params;
-        const data :any = await login(loginParams, mode);
-        if (data.code !== 200) {
+        const data = await login(loginParams, mode);
+        if (data.data.code !== 200) {
           return Promise.reject(null);
         }
-        const  token  = 'Bearer ' + data.token;
+        const token = 'Bearer ' + data.data.token;
         // save token
         this.setToken(token);
         return this.afterLoginAction(goHome);
@@ -126,28 +126,27 @@ export const useUserStore = defineStore({
     },
     async getUserInfoAction(): Promise<UserInfo | null> {
       if (!this.getToken) return null;
-         const userModel :any = await getUserInfo()
-         if(!userModel){
-          return null;
-         }
-         userModel.data =  {
-          ID : userModel.ID,
-          nickname : userModel.nickname,
-          avatar : userModel.avatar,
-          email : userModel.email,
-          userId : userModel.UUID,
-          username : userModel.username,
-          roles: {
-            roleName : userModel.roleName,
-            value : userModel.roleValue,
-          }
-         }
-         const userInfo =   userModel
+      const userModel: any = await getUserInfo();
+      if (!userModel) {
+        return null;
+      }
+      userModel.data = {
+        ID: userModel.ID,
+        nickname: userModel.nickname,
+        avatar: userModel.avatar,
+        email: userModel.email,
+        userId: userModel.UUID,
+        username: userModel.username,
+        roles: {
+          roleName: userModel.roleName,
+          value: userModel.roleValue,
+        },
+      };
+      const userInfo = userModel;
       // const userInfo = await getUserInfo();
-      const { roles = [] } :any = userInfo.data;
+      const { roles = [] }: any = userInfo.data;
       if (isArray(roles)) {
-        const roleList = roles.map((item) => 
-        item.value) as RoleEnum[];
+        const roleList = roles.map((item) => item.value) as RoleEnum[];
         this.setRoleList(roleList);
       } else {
         userInfo.data.roles = [];
