@@ -50,7 +50,7 @@ export const createOrAddDictionary = (params: DictionaryInfo, mode: ErrorMessage
  *  @description: create or update a new dictionary
  */
 export const CreateOrAddDetailDictionary = (
-  params: DictionaryInfo,
+  params: DictionaryDetail,
   mode: ErrorMessageMode = 'modal',
 ) => {
   return defHttp.post<BaseResp>(

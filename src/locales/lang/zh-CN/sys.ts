@@ -207,7 +207,7 @@ export default {
     name: '字典名称',
     dictionaryList: '字典列表',
     dictionaryDetailList: '键值列表',
-    keyValue : '键值管理',
+    keyValue: '键值管理',
     addDictionary: '添加字典',
     addDictionaryDetail: '添加键值',
     editDictionary: '编辑字典',

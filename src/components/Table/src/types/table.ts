@@ -362,7 +362,7 @@ export interface BasicTableProps<T = any> {
   /**
    * Data can be changed again before rendering.
    * The default configuration of general user empty data.
-   * You can configured globally through [ConfigProvider](https://antdv.com/components/config-provider-cn/)
+   * You can configure globally through [ConfigProvider](https://antdv.com/components/config-provider-cn/)
    *
    * @version 1.5.4
    */
@@ -395,7 +395,7 @@ export interface BasicTableProps<T = any> {
    * @param expanded
    * @param record
    */
-  onExpand?: (expande: boolean, record: T) => void;
+  onExpand?: (expand: boolean, record: T) => void;
 
   /**
    * 扩展行更改时执行的回调
@@ -417,9 +417,7 @@ export interface BasicColumn extends ColumnProps<Recordable> {
   filters?: {
     text: string;
     value: string;
-    children?:
-      | unknown[]
-      | (((props: Record<string, unknown>) => unknown[]) & (() => unknown[]) & (() => unknown[]));
+    children?: unknown[] | (((props: Record<string, unknown>) => unknown[]) & (() => unknown[]));
   }[];
 
   //

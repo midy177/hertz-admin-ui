@@ -13,7 +13,7 @@
 <script lang="ts">
   import { defineComponent, ref, computed, unref } from 'vue';
   import { BasicForm, useForm } from '/@/components/Form/index';
-  import { detailSchema } from './dictionary.data';
+  import { detailSchema, dicOptionData } from './dictionary.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { useI18n } from 'vue-i18n';
 
@@ -21,6 +21,7 @@
   import {
     createOrUpdateDictionaryDetail,
     CreateOrAddDetailDictionary,
+    getDictionaryList,
   } from '/@/api/sys/dictionary';
   import { useRouter } from 'vue-router';
 
@@ -34,7 +35,7 @@
       const dictionaryName = ref<string>('');
       const { currentRoute } = useRouter();
 
-      const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
+      const [registerForm, { resetFields, setFieldsValue, validate, updateSchema }] = useForm({
         labelWidth: 90,
         baseColProps: { span: 24 },
         schemas: detailSchema,
@@ -53,6 +54,17 @@
           });
           dictionaryName.value = data.record.name;
         }
+        const dicData = await getDictionaryList({
+          page: 1,
+          pageSize: 1000,
+        });
+        // 更新抽屉的角色模式
+        await updateSchema({
+          field: 'parentID',
+          componentProps: {
+            options: dicOptionData(dicData.data.data, 0),
+          },
+        });
       });
 
       const getTitle = computed(() =>
@@ -77,19 +89,10 @@
           key: values['key'],
           value: values['value'],
           status: values['status'],
-          parentID: Number(currentRoute.value.query.id),
+          parentID: values['parentID'],
         };
         if (params.ID == 0) {
-          const result = await CreateOrAddDetailDictionary(
-            {
-              ID: dictId,
-              title: values['title'],
-              name: '',
-              status: values['status'],
-              description: '',
-            },
-            'message',
-          );
+          const result = await CreateOrAddDetailDictionary(params, 'message');
           if (result.statusCode === 0) {
             closeDrawer();
             emit('success');

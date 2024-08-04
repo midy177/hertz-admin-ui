@@ -2,8 +2,29 @@ import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { formatToDateTime } from '/@/utils/dateUtil';
+import { DictionaryInfo } from '/@/api/sys/model/dictionaryModel';
 
 const { t } = useI18n();
+
+interface compOption {
+  label: string;
+  value: string | number;
+}
+// get role options data
+export const dicOptionData = (dicInfoInStore: DictionaryInfo[], type: number): compOption[] => {
+  const result: compOption[] = [];
+  // type 1 means search schema
+  if (type === 1) {
+    result.push({ label: '全部', value: 0 });
+  }
+  for (let i = 0; i < dicInfoInStore.length; i++) {
+    result.push({
+      label: dicInfoInStore[i].name,
+      value: dicInfoInStore[i].ID,
+    });
+  }
+  return result;
+};
 
 export const columns: BasicColumn[] = [
   {
@@ -170,6 +191,15 @@ export const detailSchema: FormSchema[] = [
     label: t('common.value'),
     required: true,
     component: 'Input',
+  },
+  {
+    field: 'parentID',
+    label: t('sys.dictionary.name'),
+    required: true,
+    component: 'Select',
+    componentProps: {
+      options: [],
+    },
   },
   {
     field: 'status',

@@ -102,7 +102,7 @@
         const result = await deleteUser({ ID: record.ID }, 'modal');
         if (result.statusCode === 0) {
           message.success(result.statusMsg, 3);
-          reload();
+          await reload();
         } else {
           message.error(result.statusMsg);
         }

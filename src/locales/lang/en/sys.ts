@@ -214,7 +214,7 @@ export default {
     name: 'Dictionary Name',
     dictionaryList: 'Dictionary List',
     dictionaryDetailList: 'Key/Value List',
-    keyValue : 'Key/Value Manage',
+    keyValue: 'Key/Value Manage',
     addDictionary: 'Add Dictionary',
     addDictionaryDetail: 'Add Key/Value',
     editDictionary: 'Edit Dictionary',
