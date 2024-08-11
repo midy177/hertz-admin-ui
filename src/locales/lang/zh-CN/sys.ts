@@ -251,7 +251,7 @@ export default {
     time: '耗时(ms)',
     createdAt: '创建时间',
     updatedAt: '更新时间',
-    successLo : '成功',
-    errorLo : '失败',
+    successLo: '成功',
+    errorLo: '失败',
   },
 };

@@ -8,7 +8,6 @@ import { Tag } from 'ant-design-vue';
 
 const { t } = useI18n();
 
-
 export const columns: BasicColumn[] = [
   {
     title: t('sys.logs.type'),

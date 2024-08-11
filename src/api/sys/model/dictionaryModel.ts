@@ -12,6 +12,7 @@ export interface DictionaryInfo {
   description: string; // 描述
   createdAt?: string; // 创建时间
   updatedAt?: string; // 更新时间
+  parentID: number; // 父级 ID
 }
 
 /**
